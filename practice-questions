@@ -13,3 +13,58 @@ public boolean doesSumExist(int[] arr, int val) {
   return false;
 }
 
+
+public class Entry {
+  private int key;
+  private int value;
+  private LinkedHashEntry next;
+  
+  public Entry(key, value) {
+    this.key = key;
+    this.value = value;
+    this.next = null;
+  }
+  
+  public int getValue() {
+    return value;
+  }
+  
+  public void setValue(int value) {
+    this.value = value;
+  }
+  
+  public LinkedHashEntry getNext() {
+    return next;
+  }
+  
+  public void setNext(LinkedHashEntry next) {
+    this.next = net;
+  }
+}
+
+public class Structure {
+  private final int SIZE = 32;
+  private ArrayList<Integer> list;
+  private LinkedHashEntry[] table;
+  
+  public Structure () {
+    table = new LinkedHashEntry[SIZE];
+  }
+  
+  public void add(int num) {
+    int index = list.length;
+    list.add(num);
+    int hash = num % SIZE;
+    table[hash] = new LinkedHashEntry(num, index);
+    
+  }
+  
+  public void remove(int num) {
+  
+  }
+  
+  public int getRandom() {
+  
+  }
+  
+}
