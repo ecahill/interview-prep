@@ -83,34 +83,36 @@ public class Structure {
   }
   
   public void remove(int num) {
+    int indexValue = -1;
     int hash = num.hashCode() % SIZE;
     if (table[hash] == null) {
       return;
     }
     else if (!table[hash].equals(num)) {
       Entry cur = table[hash];
+      if (cur.getKey() == num) {
+        indexValue = cur.getValue();
+        table[hash] = cur.getNext();
+      }
       while(cur.getNext() != null) {
         if (cur.getNext().getKey().equals(num)) {
+          indexValue = cur.getNext().getValue());
           cur.setNext(cur.getNext().getNext());
           return;
         }
         cur = cur.getNext();
       }
     }
-    list.remove(num);
-    total--;
+    if (indexValue >= 0) {
+      int temp = list.get(total-1);
+      list.set(indexValue, temp);
+      list.remove(total-1);
+      total--;    
+    }
   }
   
   public int getRandom() {
     int index = rand.nextInt(total);
     return arr.get(index);
-  }
-  
-  public int[] toArr() {
-    int[] arr = new int[total];
-    for (Entry e : table) {
-      arr[e.getValue()] = e.getKey();
-    }
-    return arr;
   }
 }
