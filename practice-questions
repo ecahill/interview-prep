@@ -60,6 +60,9 @@ public class Structure {
   public Structure () {
     rand = new Random();
     table = new Entry[SIZE];
+    for (int i = 0; i < SIZE; i++) {
+      table[i] = null;
+    }
   }
   
   public void add(int num) {
