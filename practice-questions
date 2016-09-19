@@ -17,7 +17,7 @@ public boolean doesSumExist(int[] arr, int val) {
 public class Entry {
   private int key;
   private int value;
-  private LinkedHashEntry next;
+  private Entry next;
   
   public Entry(key, value) {
     this.key = key;
@@ -33,11 +33,19 @@ public class Entry {
     this.value = value;
   }
   
-  public LinkedHashEntry getNext() {
+  public int getKey() {
+    return key;
+  }
+  
+  public void setKey(int key) {
+    this.key = key;
+  }
+  
+  public Entry getNext() {
     return next;
   }
   
-  public void setNext(LinkedHashEntry next) {
+  public void setNext(Entry next) {
     this.next = net;
   }
 }
@@ -45,26 +53,61 @@ public class Entry {
 public class Structure {
   private final int SIZE = 32;
   private ArrayList<Integer> list;
-  private LinkedHashEntry[] table;
+  private Entry[] table;
+  private int total;
+  private Random rand;
   
   public Structure () {
-    table = new LinkedHashEntry[SIZE];
+    rand = new Random();
+    table = new Entry[SIZE];
   }
   
   public void add(int num) {
-    int index = list.length;
+    Entry e = new Entry(num, total);
     list.add(num);
-    int hash = num % SIZE;
-    table[hash] = new LinkedHashEntry(num, index);
-    
+    int hash = num.hashCode() % SIZE;
+    if (table[hash] == null) {
+      table[hash] = e;
+    }
+    else {
+      Entry cur = table[hash];
+      while (cur.getNext() != null) {
+        cur = cur.getNext();
+      }
+      cur.setNext(e);
+    }
+    total++;
   }
   
   public void remove(int num) {
-  
+    int hash = num.hashCode() % SIZE;
+    if (table[hash] == null) {
+      return;
+    }
+    else if (!table[hash].equals(num)) {
+      Entry cur = table[hash];
+      while(cur.getNext() != null) {
+        if (cur.getNext().getKey().equals(num)) {
+          cur.setNext(cur.getNext().getNext());
+          return;
+        }
+        cur = cur.getNext();
+      }
+    }
+    list.remove(num);
+    total--;
   }
   
   public int getRandom() {
-  
+    int index = rand.nextInt(total);
+    return arr.get(index);
   }
   
+  public int[] toArr() {
+    int[] arr = new int[total];
+    for (Entry e : table) {
+      arr[e.getValue()] = e.getKey();
+    }
+    return arr;
+  }
 }
